@@ -9,7 +9,7 @@
 # Alignment visualization between DupRemoved and DupPairs can confirm nature of duplicates
 # Inspired by https://bioinformatics.stackexchange.com/a/14421 (answer on https://bioinformatics.stackexchange.com/questions/3931/remove-delete-sequences-by-id-from-multifasta)
 
-if [[ ! -f $1 ]] || [[ ! -f $2 ]] || [[ $1 != *"RemoveList.tsv" ]] || [[ $2 != *".fa"* ]]; then
+if [[ ! -f $1 ]] || [[ ! -f $2 ]] || [[ $1 != *"RemoveList"*".tsv" ]] || [[ $2 != *".fa"* ]]; then
 	echo "USAGE: $0 REMOVELIST.tsv ASSEMBLY.fa"
 	echo "Reads RemoveList.tsv output from BUSCO_stats_by_contig.py"
 	echo "Removes identified duplicate scaffolds from ASSEMBLY.fa"
