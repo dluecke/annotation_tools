@@ -14,6 +14,7 @@ if [[ ! -f $1 ]] || [[ ! -f $2 ]] || [[ $1 != *"RemoveList"*".tsv" ]] || [[ $2 !
 	echo "Reads RemoveList.tsv output from BUSCO_stats_by_contig.py"
 	echo "Removes identified duplicate scaffolds from ASSEMBLY.fa"
 	echo "Writes ASSEMBLY-DeDup.fa, ASSEMBLY-DupRemoved.fa, and ASSEMBLY-DupPairs.fa (for alignment visualization)"
+	echo "If ANNOTATION.gff included also writes ANNOTATION-DeDup.gff and ANNOTATION-DupRemoved.gff"
 	echo "REQUIRES: samtools"
 	exit
 fi
