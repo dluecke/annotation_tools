@@ -43,8 +43,9 @@ pairs_ids=($(cut -f2 $1 | sed 's/, /\n/' | \
 	sort -n -k1,1 -k2 | cut -d' ' -f2 | uniq ))
 
 # for list of all scaffolds to keep need to use grep -v 
+# including both end of line search character "$" and newline "\n" to separate patterns
 keep_ids=($(awk '{print $1}' $2.fai | \
-	grep -v -F "$(printf '%s\n' "${remove_ids[@]}")" ))
+	grep -v -F "$(printf '%s$\n' "${remove_ids[@]}")" ))
 
 
 # Use samtools faidx to extract relevant scaffolds for each and write to new files
