@@ -41,11 +41,15 @@ remove_ids=($(cut -f1 $1 | tail -n +2 ))
 pairs_ids=($(cut -f2 $1 | sed 's/, /\n/' | \
 	awk 'NR > 1 {print length, $0 }' | \
 	sort -n -k1,1 -k2 | cut -d' ' -f2 | uniq ))
+	
+# make a sed command to delete exact word matches
+sed_cmd=""
+for pattern in "${remove_ids[@]}"; do \
+	sed_cmd+=" /${pattern}\\b/d;" \
+done
 
-# for list of all scaffolds to keep need to use grep -v 
-# including both end of line search character "$" and newline "\n" to separate patterns
-keep_ids=($(awk '{print $1}' $2.fai | \
-	grep -v -F "$(printf '%s$\n' "${remove_ids[@]}")" ))
+# use sed delete command to remove appropriate scaffolds from full scaffold list
+keep_ids=($(awk '{print $1}' $2.fai | sed "$sed_cmd" ))
 
 
 # Use samtools faidx to extract relevant scaffolds for each and write to new files
