@@ -48,7 +48,7 @@ for pattern in "${remove_ids[@]}"; do \
 	sed_cmd+=" /${pattern}\\b/d;" \
 done
 
-# use sed delete command to remove appropriate scaffolds from full scaffold list
+# use sed delete command to remove appropriate scaffolds from full scaffold list pulled from fasta index
 keep_ids=($(awk '{print $1}' $2.fai | sed "$sed_cmd" ))
 
 
