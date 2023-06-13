@@ -51,14 +51,14 @@ pairs_ids=($(cut -f2 $1 | sed 's/, /\n/' | \
 	
 # make a sed command to delete exact word matches for remove ids
 SED_DELETE_CMD=""
-for pattern in "${remove_ids[@]}"; do \
-	SED_DELETE_CMD+=" /${pattern}\\b/d;" \
+for pattern in "${remove_ids[@]}"; do
+	SED_DELETE_CMD+=" /${pattern}\\b/d;"
 done
 
 # make a sed command to print exact word matches for remove ids
 SED_PRINT_CMD=""
-for pattern in "${remove_ids[@]}"; do \
-	SED_PRINT_CMD+=" /${pattern}\\b/p;" \
+for pattern in "${remove_ids[@]}"; do
+	SED_PRINT_CMD+=" /${pattern}\\b/p;"
 done
 
 # use sed delete command to remove appropriate scaffolds from full scaffold list pulled from fasta index
