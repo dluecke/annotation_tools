@@ -73,5 +73,5 @@ samtools faidx -o $OUTFILE_DUPPAIRS $2 "${pairs_ids[@]}"
 # also split annotation if included
 if [[ -f $3 ]]; then
 	sed "$SED_DELETE_CMD" $3 > $ANNOTATION_DEDUP
-	sed "$SED_PRINT_CMD" $3 > $ANNOTATION_DUPREMOVE
+	sed -n "$SED_PRINT_CMD" $3 > $ANNOTATION_DUPREMOVE
 fi
