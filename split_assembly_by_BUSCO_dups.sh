@@ -15,7 +15,7 @@ if [[ ! -f $1 ]] || [[ ! -f $2 ]] || [[ $1 != *"RemoveList"*".tsv" ]] || [[ $2 !
 	echo "Removes identified duplicate scaffolds from ASSEMBLY.fa"
 	echo "Writes ASSEMBLY-DeDup.fa, ASSEMBLY-DupRemoved.fa, and ASSEMBLY-DupPairs.fa (for alignment visualization)"
 	echo "If ANNOTATION.gff included also writes ANNOTATION-DeDup.gff and ANNOTATION-DupRemoved.gff"
-	echo "REQUIRES: samtools"
+	echo "REQUIRES: samtools (written with version 1.15.1)"
 	exit
 fi
 
