@@ -48,9 +48,3 @@ END {
 		print line; 
 	}
 }' $1 > $TSVFILE
-		
-		
-		
-		
-		
-		
