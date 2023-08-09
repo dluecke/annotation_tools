@@ -47,4 +47,4 @@ END {
 	if (line != "") {
 		print line; 
 	}
-}' $1 > $TSVFILE
+}' $1 >> $TSVFILE
