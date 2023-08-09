@@ -16,7 +16,7 @@ if [[ ! -f $1 ]]; then
 	echo "USAGE: $0 plotdata.[fr]plot"
 	echo "Takes gnuplot data files from mummerplot either .fplot or .rplot"
 	echo "Converts to tsv file for R plotting"
-	echo "Writes file $1.tsv"
+	echo "Writes file plotdata.[fr]plot.tsv"
 	exit
 fi
 
