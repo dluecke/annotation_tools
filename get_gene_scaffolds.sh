@@ -20,7 +20,7 @@ NOEXTNAME=$(echo "$FILENAME" | rev | cut --complement -f1 -d'.' | rev)
 
 # get sequences with gene annotations from provided gff
 # sorted by scaffold number assuming Scaffold_N format
-cut -f1-3 $2 | grep gene | cut -f1 | sort -u | \
+cut -f1-3 $2 | grep -w gene | cut -f1 | sort -u | \
      awk '{print length, $0 }' | sort -k1,1 | \
      cut -f2 -d' ' > $INDIR/$NOEXTNAME-GeneScafNames.txt
 
