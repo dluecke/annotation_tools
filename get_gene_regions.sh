@@ -32,7 +32,7 @@ GFFDIR=$(dirname $(readlink -f $GFFFILE))
 GFFFILENAME=$(basename $GFFFILE)
 GFFFILENOEXT=$(echo "$GFFFILENAME" | rev | cut --complement -f1 -d'.' | rev)
 GFFFILEABS=$GFFDIR/$GFFFILENAME
-GFFOUT=$GFFFILENOEXT"-GeneRegions.gff"
+GFFOUT=$GFFDIR/$GFFFILENOEXT"-GeneRegions.gff"
 
 # write new GFF with only gene feature lines, replacing 3rd column with geneID (first item in column 9)
 cd $GFFDIR
@@ -42,7 +42,7 @@ awk '$3== "gene" { split($9, id, ";");
 
 # write gene region fasta using -s option in getfasta for strandedness 
 cd $FASTADIR
-bedtools getfasta -fi $FASTAFILE -bed $GFFFILEABS -s -name -fo $FASTAOUT
+bedtools getfasta -fi $FASTAFILE -bed $GFFOUT -s -name -fo $FASTAOUT
 
 
 
