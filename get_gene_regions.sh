@@ -15,7 +15,7 @@ if [[ ! -f $1 ]] || [[ ! -f $2 ]] || [[ ! -x $(command -v bedtools getfasta) ]];
 	echo "USAGE: $0 ASSEMBLY.fa ANNOTATION.gff"
 	echo "Writes ASSEMBLY-GeneRegions.fa with all annotated gene regions in correct orientation"
 	echo "Outputs to same directory as original assembly"
-	echo "REQUIRES: bedtools getfasta"
+	echo "REQUIRES: bedtools (sort, merge, getfasta)"
 	exit
 fi
 
@@ -44,7 +44,8 @@ awk '$3== "gene" { split($9, id, ";");
 # merge overlapping regions for each strand
 bedtools sort -i $GFFOUT | \
 	bedtools merge -s -i - -c 2,3,6,7,8,9 -o distinct | \
-	awk '{print $1 "\t" $4 "\t" $5 "\t" $2 "\t" $3 "\t" $6 "\t" $7 "\t" $8 "\t" $9}' \
+	# keeping in GFF format so reordering columns and converting from 0-indexed to 1-indexed
+	awk '{print $1 "\t" $4 "\t" $5 "\t" $2 + 1 "\t" $3 + 1 "\t" $6 "\t" $7 "\t" $8 "\t" $9}' \
 	> $GFFOUTMERGED
 
 # write gene region fasta using -s option in getfasta for strandedness 
