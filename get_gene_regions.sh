@@ -33,16 +33,23 @@ GFFFILENAME=$(basename $GFFFILE)
 GFFFILENOEXT=$(echo "$GFFFILENAME" | rev | cut --complement -f1 -d'.' | rev)
 GFFFILEABS=$GFFDIR/$GFFFILENAME
 GFFOUT=$GFFDIR/$GFFFILENOEXT"-GeneRegions.gff"
+GFFOUTMERGED=$GFFDIR/$GFFFILENOEXT"-GeneRegions_merged.gff"
 
 # write new GFF with only gene feature lines, replacing 3rd column with geneID (first item in column 9)
 cd $GFFDIR
 awk '$3== "gene" { split($9, id, ";"); 
 	print $1 "\t" $2 "\t" id[1] "\t" $4 "\t" $5 "\t" $6 "\t" $7 "\t" $8 "\t" $9}' \
 	$GFFFILE > $GFFOUT
+	
+# merge overlapping regions for each strand
+bedtools sort -i $GFFOUT | \
+	bedtools merge -s -i - -c 2,3,6,7,8,9 -o distinct | \
+	awk '{print $1 "\t" $4 "\t" $5 "\t" $2 "\t" $3 "\t" $6 "\t" $7 "\t" $8 "\t" $9}' \
+	> $GFFOUTMERGED
 
 # write gene region fasta using -s option in getfasta for strandedness 
 cd $FASTADIR
-bedtools getfasta -fi $FASTAFILE -bed $GFFOUT -s -name -fo $FASTAOUT
+bedtools getfasta -fi $FASTAFILE -bed $GFFOUTMERGED -s -name -fo $FASTAOUT
 
 
 
