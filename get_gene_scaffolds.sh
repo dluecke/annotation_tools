@@ -1,6 +1,6 @@
 #!/bin/bash
 # get_gene_scaffolds.sh takes ASSEMBLY.fa and ANNOTATION.gff
-# writes new assembly ASSEMBLY-GeneScafs.fa, which
+# writes new fasta ASSEMBLY-GeneScafs.fa, which
 # contains all scaffolds with annotated genes
 # REQUIRES samtools (written with version 1.15.1)
 

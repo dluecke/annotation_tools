@@ -12,6 +12,9 @@
 #  	R1	Q1	R2	Q2
 # drops similarity score
 
+# also finds mummerplot gp plot file "NAME.gp" and extracts scaffold breakpoints
+# outputs NAME.breaks.tsv with gp script line, seq name, and start position in alignment
+
 if [[ ! -f $1 ]]; then
 	echo "USAGE: $0 plotdata.[fr]plot"
 	echo "Takes gnuplot data files from mummerplot either .fplot or .rplot"
@@ -48,3 +51,15 @@ END {
 		print line; 
 	}
 }' $1 >> $TSVFILE
+
+# get the scaffold breakpoints from the .gp file if file can be found
+NOEXT="${1%.*}"
+if [[ -f $NOEXT.gp ]]; then
+	echo -e "gpLine\tSeqName\tPosition" > $NOEXT.breaks.tsv
+	grep -n '^ "' $NOEXT.gp | sed '$d' | sed '$d' | \
+		tr -d ':' | tr -d ',' | \
+		awk '{print $1 "\t" $2 "\t" $3}' >> $NOEXT.breaks.tsv
+fi
+	
+
+
