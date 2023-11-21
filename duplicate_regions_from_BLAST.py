@@ -9,6 +9,10 @@ import pandas as pd
 INFILE_WITHIN = "AllVsAll-blast_results-min1kb.tsv"
 INFILE_BETWEEN = "AllVsrhop-blast_results-min1kb.tsv"
 
+# naming based on GeneRegions.fa that went into BLAST 
+OUTFILE_REGIONS = "prolongata_renamed_assembly-DeDup-DuplicateRegions.tsv"
+OUTFILE_GENES = "prolongata_renamed_assembly-DeDup-DuplicateGeneList.tsv"
+
 # parameters for reading BLAST outfmt 6 tsv files
 outfmt6_kept_columns_pos = [0, 1, 2, 3, 11]
 outfmt6_kept_columns_names = ['Query', 'Subject', 'PctID', 'Length', 'BitScore']
@@ -63,22 +67,31 @@ df_genes = df_genes.explode('GeneID').drop_duplicates().reset_index(drop=True)
 df_genes['GeneNum'] = df_genes['GeneID'].str.extract(r'ID=gene(.*)').astype(int)
 df_genes = df_genes.sort_values(by='GeneNum').reset_index(drop=True)
 
-# want all scaffold pairs that contain putative duplicates, without reverse pairs
-set_DupScaffTuples = set()
-# sorted list of the tuple set
-ls_DupScaffTuples_wRPs = sorted(set(zip(df_regions['Q-Scaffold'], df_regions['S-Scaffold'])))
-# add tuples to scaffold pair set, skipping second member of reverse pairs
-for ScaffPair in ls_DupScaffTuples_wRPs:
-	if (ScaffPair[1], ScaffPair[0]) not in set_DupScaffTuples:
-		set_DupScaffTuples.add(ScaffPair)
-# ordered list of unique putative duplicated scaffold pairs
-ls_DupScaffs = sorted(set_DupScaffTuples)
+# write output text files for gene list and duplicate relationship
+df_regions.to_csv(OUTFILE_REGIONS, sep = '\t')
+df_genes['GeneID'].to_csv(OUTFILE_GENES, sep = '\t', index=False)
 
-# make df for coordinates of IDed duplication for each pair
-df_DupCoords = pd.DataFrame()
-for SP in ls_DupScaffs:
-	SPDCs = df_regions[ (df_regions['Q-Scaffold']==SP[0]) & (df_regions['S-Scaffold']==SP[1]) ]
-
+### Below is start of Duplicate Scaffold Region calling
+# for now just reporting df_genes (gene list) 
+#   and df_regions (has duplication relationships)
+#
+#
+# # want all scaffold pairs that contain putative duplicates, without reverse pairs
+# set_DupScaffTuples = set()
+# # sorted list of the tuple set
+# ls_DupScaffTuples_wRPs = sorted(set(zip(df_regions['Q-Scaffold'], df_regions['S-Scaffold'])))
+# # add tuples to scaffold pair set, skipping second member of reverse pairs
+# for ScaffPair in ls_DupScaffTuples_wRPs:
+# 	if (ScaffPair[1], ScaffPair[0]) not in set_DupScaffTuples:
+# 		set_DupScaffTuples.add(ScaffPair)
+# # ordered list of unique putative duplicated scaffold pairs
+# ls_DupScaffs = sorted(set_DupScaffTuples)
+# 
+# # make df for coordinates of IDed duplication for each pair
+# df_DupCoords = pd.DataFrame()
+# for SP in ls_DupScaffs:
+# 	SPDCs = df_regions[ (df_regions['Q-Scaffold']==SP[0]) & (df_regions['S-Scaffold']==SP[1]) ]
+# 
 
 
 
