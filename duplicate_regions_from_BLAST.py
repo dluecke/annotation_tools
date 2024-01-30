@@ -68,7 +68,7 @@ df_genes['GeneNum'] = df_genes['GeneID'].str.extract(r'ID=gene(.*)').astype(int)
 df_genes = df_genes.sort_values(by='GeneNum').reset_index(drop=True)
 
 # write output text files for gene list and duplicate relationship
-df_regions.to_csv(OUTFILE_REGIONS, sep = '\t')
+df_regions.to_csv(OUTFILE_REGIONS, sep = '\t', index=False)
 df_genes['GeneID'].to_csv(OUTFILE_GENES, sep = '\t', index=False)
 
 ### Below is start of Duplicate Scaffold Region calling
