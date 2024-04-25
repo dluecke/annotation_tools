@@ -103,10 +103,8 @@ if [[ -f $1.gp ]]; then
 		REF_LASTLINE=$(tail -n1 $BREAKSFILE | cut -f1)
 		QRY_NAME=$(grep ylabel $1.gp | cut -d' ' -f3)
 		QRY_LENGTH=$(grep yrange $1.gp | sed -e 's/.*:\([0-9]*\)].*/\1/' ) 
-		echo -e "$((REF_LASTLINE + 3)\t${QRY_NAME}\t1" >> $BREAKSFILE
-		echo -e "$((REF_LASTLINE + 4)\t${EMPTY}\t${QRY_LENGTH}" >> $BREAKSFILE
+		echo -e "$((REF_LASTLINE + 3))\t${QRY_NAME}\t1" >> $BREAKSFILE
+		echo -e "$((REF_LASTLINE + 4))\t${EMPTY}\t${QRY_LENGTH}" >> $BREAKSFILE
 	fi
 fi
 	
-
-
