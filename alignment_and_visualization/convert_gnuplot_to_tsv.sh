@@ -89,12 +89,14 @@ if [[ -f $1.gp ]]; then
 		tr -d ':' | tr -d ',' | \
 		awk '{print $1 "\t" $2 "\t" $3}' >> $BREAKSFILE
 	# for single scaffold alignments won't have these lines
+	# can write lines with expected format from other lines in .gp
+	EMPTY='""'
 	# single reference contig:
 	if ! grep -q xtics $1.gp; then
 		REF_NAME=$(grep xlabel $1.gp | cut -d' ' -f3)
 		REF_LENGTH=$(grep xrange $1.gp | sed -e 's/.*:\([0-9]*\)].*/\1/' ) 
 		echo -e "4\t${REF_NAME}\t1" >> $BREAKSFILE
-		echo -e "5\t\"\"\t${REF_LENGTH}" >> $BREAKSFILE
+		echo -e "5\t${EMPTY}\t${REF_LENGTH}" >> $BREAKSFILE
 	fi
 	# single query contig:
 	if ! grep -q ytics $1.gp; then
@@ -102,7 +104,7 @@ if [[ -f $1.gp ]]; then
 		QRY_NAME=$(grep ylabel $1.gp | cut -d' ' -f3)
 		QRY_LENGTH=$(grep yrange $1.gp | sed -e 's/.*:\([0-9]*\)].*/\1/' ) 
 		echo -e "$((REF_LASTLINE + 3)\t${QRY_NAME}\t1" >> $BREAKSFILE
-		echo -e "$((REF_LASTLINE + 4)\t\"\"\t${QRY_LENGTH}" >> $BREAKSFILE
+		echo -e "$((REF_LASTLINE + 4)\t${EMPTY}\t${QRY_LENGTH}" >> $BREAKSFILE
 	fi
 fi
 	
