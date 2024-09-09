@@ -82,10 +82,10 @@ for INDEX, ROW in df_RemoveCandidates.iterrows():
 	KEPT_DUP_IDS = set().union(*df_Keepers['Duplicated BUSCO IDs'].values)
 	# add to Keep set if ROW has BUSCO IDs not already in Keepers
 	if len(ROW_DUP_IDS & KEPT_DUP_IDS) < len(ROW_DUP_IDS):
-		df_Keepers = df_Keepers.append(ROW)
+		df_Keepers = df_Keepers.concat(ROW)
 	# otherwise add to Remove 
 	else:
-		df_Remove = df_Remove.append(ROW)
+		df_Remove = df_Remove.concat(ROW)
 		
 # print removal summary results to screen
 N_REMOVE_CONTIGS = df_Remove.shape[0]
