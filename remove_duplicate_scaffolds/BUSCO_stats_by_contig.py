@@ -2,6 +2,7 @@
 
 # BUSCO_stats_by_contig.py reads the BUSCO program output file "full_table.tsv"
 # returns table of contig breakdown and list of fully duplicated contigs for removal
+# uses pandas version 1.2.2
 
 # sorts by contig/scaffold ("Sequence") in the original assembly and reports for each:
 # 	N_BUSCOs: total BUSCO benchmark genes (BUSCOs)
